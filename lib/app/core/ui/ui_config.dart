@@ -12,6 +12,7 @@ class UiConfig {
     primaryColorLight: const Color(0xffDDE9C7),
     appBarTheme: const AppBarTheme(
       backgroundColor: Color(0xffA8CE4B),
+      elevation: 0,
     )
   );
 }
