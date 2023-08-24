@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_cuidapet_br/app/core/environment.dart';
+import 'package:flutter_cuidapet_br/app/core/helpers/environment.dart';
 import 'package:flutter_cuidapet_br/firebase_options.dart';
 
 class ApplicationConfig {
