@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cuidapet_br/app/core/helpers/environment.dart';
 import 'package:flutter_cuidapet_br/app/core/ui/extensions/size_screen_extension.dart';
 import 'package:flutter_cuidapet_br/app/core/ui/extensions/theme_extension.dart';
 import 'package:flutter_cuidapet_br/app/core/ui/icons/cuidapet_icons.dart';
 import 'package:flutter_cuidapet_br/app/core/ui/widgets/cuidapet_button_with_icon.dart';
 import 'package:flutter_cuidapet_br/app/core/ui/widgets/cuidapet_default_button.dart';
+import 'package:flutter_cuidapet_br/app/core/ui/widgets/cuidapet_loader.dart';
+import 'package:flutter_cuidapet_br/app/core/ui/widgets/cuidapet_messages.dart';
 import 'package:flutter_cuidapet_br/app/core/ui/widgets/cuidapet_text_form_field.dart';
 
 part './widgets/login_form.dart';
@@ -40,7 +41,7 @@ class LoginPage extends StatelessWidget {
                 SizedBox(height: 15.h),
                 const _OrDivider(),
                 SizedBox(height: 15.h),
-                _LoginRegisterButtons(),
+                const _LoginRegisterButtons(),
               ],
             )),
       ),
@@ -50,7 +51,6 @@ class LoginPage extends StatelessWidget {
 
 class _OrDivider extends StatelessWidget {
   const _OrDivider();
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -62,12 +62,16 @@ class _OrDivider extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8,),
-          child: Text('OU', style: TextStyle(
-            color: context.primaryColor,
-            fontWeight: FontWeight.bold,
-            fontSize: 20.sp
-          ),),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 8,
+          ),
+          child: Text(
+            'OU',
+            style: TextStyle(
+                color: context.primaryColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 20.sp),
+          ),
         ),
         Expanded(
           child: Divider(

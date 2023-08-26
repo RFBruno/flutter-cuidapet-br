@@ -45,6 +45,8 @@ dependencies:
   flutter_dotenv: ^5.1.0
   firebase_remote_config: ^4.2.5
   firebase_analytics: ^10.4.5
+  flutter_secure_storage: ^8.0.0
+  shared_preferences: ^2.2.0
   
 
 dev_dependencies:
@@ -52,6 +54,7 @@ dev_dependencies:
     sdk: flutter
   build_runner: ^2.4.6
   mobx_codegen: ^2.3.0
+  logger:
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
