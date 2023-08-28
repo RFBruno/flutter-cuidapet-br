@@ -11,6 +11,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 class AuthModule extends Module {
   @override
   void binds(i) {
+    //Modular tem inteligencia para pegar as instancias necessarias das classes
+    // que estão declaradas no CoreModule
     i.addLazySingleton<UserRepository>(UserRepositoryImpl.new);
     i.addLazySingleton<UserService>(UserServiceImpl.new);
   }
