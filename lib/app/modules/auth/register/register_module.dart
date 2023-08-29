@@ -6,7 +6,7 @@ class RegisterModule extends Module {
   @override
   void binds(Injector i) {
     super.binds(i);
-    i.addLazySingleton<RegisterController>(RegisterController.new);
+    i.addLazySingleton(RegisterController.new);
   }
 
   @override

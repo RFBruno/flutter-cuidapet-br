@@ -12,11 +12,11 @@ class DioRestClient extends RestClient {
     connectTimeout: Duration(
         milliseconds: int.parse(
             Environment.param(Constants.ENV_REST_CLIENT_CONNECT_TIMEOUT) ??
-                '0')),
+                '60000')),
     receiveTimeout: Duration(
         milliseconds: int.parse(
             Environment.param(Constants.ENV_REST_CLIENT_RECEIVE_TIMEOUT) ??
-                '0')),
+                '60000')),
   );
 
   DioRestClient({BaseOptions? baseOptions}) {
@@ -31,7 +31,9 @@ class DioRestClient extends RestClient {
 
   @override
   RestClient unauth() {
-    _defaultOptions.extra['auth_required'] = true;
+    _dio.interceptors
+        .add(LogInterceptor(requestBody: true, responseBody: true));
+    _defaultOptions.extra['auth_required'] = false;
     return this;
   }
 

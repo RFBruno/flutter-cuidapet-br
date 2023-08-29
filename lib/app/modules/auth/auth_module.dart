@@ -13,6 +13,7 @@ class AuthModule extends Module {
   void binds(i) {
     //Modular tem inteligencia para pegar as instancias necessarias das classes
     // que estão declaradas no CoreModule
+    super.binds(i);
     i.addLazySingleton<UserRepository>(UserRepositoryImpl.new);
     i.addLazySingleton<UserService>(UserServiceImpl.new);
   }
