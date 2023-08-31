@@ -4,9 +4,10 @@ import 'package:flutter_cuidapet_br/app/core/ui/extensions/theme_extension.dart'
 import 'package:flutter_cuidapet_br/app/core/ui/icons/cuidapet_icons.dart';
 import 'package:flutter_cuidapet_br/app/core/ui/widgets/cuidapet_button_with_icon.dart';
 import 'package:flutter_cuidapet_br/app/core/ui/widgets/cuidapet_default_button.dart';
-import 'package:flutter_cuidapet_br/app/core/ui/widgets/cuidapet_loader.dart';
-import 'package:flutter_cuidapet_br/app/core/ui/widgets/cuidapet_messages.dart';
 import 'package:flutter_cuidapet_br/app/core/ui/widgets/cuidapet_text_form_field.dart';
+import 'package:flutter_cuidapet_br/app/modules/auth/login/login_controller.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:validatorless/validatorless.dart';
 
 part './widgets/login_form.dart';
 part './widgets/login_register_buttons.dart';

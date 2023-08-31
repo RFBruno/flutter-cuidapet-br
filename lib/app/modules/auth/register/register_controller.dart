@@ -23,6 +23,8 @@ abstract class RegisterControllerBase with Store {
     try {
       CuidapetLoader.show();
       await _userService.register(email, password);
+      CuidapetMessages.info(
+          'Enviamos um e-mail de confirmação, por favor olhe sua caixa de e-mail');
       CuidapetLoader.hide();
     } on UserExistsException {
       CuidapetLoader.hide();

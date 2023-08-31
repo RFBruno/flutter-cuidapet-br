@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1045389934547-2dqf5dfkeqb5hprbft3vel5tcp8a4l7n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.brf.flutter_cuidapet_br",
+            "certificate_hash": "ce3862917b69f8fbf60083d990537918051aeadf"
+          }
+        },
+        {
           "client_id": "1045389934547-6j84qak2himuns72j8ot9o1kv40nfmc1.apps.googleusercontent.com",
           "client_type": 3
         }
