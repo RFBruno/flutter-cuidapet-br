@@ -1,9 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_cuidapet_br/app/core/helpers/constants.dart';
 import 'package:flutter_cuidapet_br/app/core/helpers/environment.dart';
+import 'package:flutter_cuidapet_br/app/core/local_storage/local_storage.dart';
+import 'package:flutter_cuidapet_br/app/core/logger/app_logger.dart';
+import 'package:flutter_cuidapet_br/app/core/rest_client/dio/interceptor/auth_interceptor.dart';
 import 'package:flutter_cuidapet_br/app/core/rest_client/rest_client.dart';
 import 'package:flutter_cuidapet_br/app/core/rest_client/rest_client_exception.dart';
 import 'package:flutter_cuidapet_br/app/core/rest_client/rest_client_response.dart';
+import 'package:flutter_cuidapet_br/app/modules/core/auth/auth_store.dart';
 
 class DioRestClient extends RestClient {
   late final Dio _dio;
@@ -19,13 +23,25 @@ class DioRestClient extends RestClient {
                 '0')),
   );
 
-  DioRestClient({BaseOptions? baseOptions}) {
+  DioRestClient(
+      {required LocalStorage localStorage,
+      required AuthStore authStore,
+      required AppLogger log,
+      BaseOptions? baseOptions}) {
     _dio = Dio(baseOptions ?? _defaultOptions);
+    _dio.interceptors.addAll([
+      AuthInterceptor(
+        localStorage: localStorage,
+        authStore: authStore,
+        log: log,
+      ),
+      LogInterceptor(requestBody: true, responseBody: true),
+    ]);
   }
 
   @override
   RestClient auth() {
-    _defaultOptions.extra['auth_required'] = true;
+    _defaultOptions.extra[Constants.REST_CLIENT_AUTH_REQUIRED_KEY] = true;
     return this;
   }
 
@@ -33,7 +49,7 @@ class DioRestClient extends RestClient {
   RestClient unauth() {
     // _dio.interceptors
     //     .add(LogInterceptor(requestBody: true, responseBody: true));
-    _defaultOptions.extra['auth_required'] = false;
+    _defaultOptions.extra[Constants.REST_CLIENT_AUTH_REQUIRED_KEY] = false;
     return this;
   }
 

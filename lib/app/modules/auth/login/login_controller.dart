@@ -23,6 +23,7 @@ abstract class LoginControllerBase with Store {
       CuidapetLoader.show();
       await _userService.login(email, password);
       CuidapetLoader.hide();
+      Modular.to.navigate('/auth/');
     } on Failure catch (e, s) {
       final erroMessage = e.message ?? 'Erro ao realizar login';
       _log.error(erroMessage, e, s);

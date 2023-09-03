@@ -1,9 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:io';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_cuidapet_br/app/core/exceptions/failure.dart';
 import 'package:flutter_cuidapet_br/app/core/exceptions/user_exists_exception.dart';
 import 'package:flutter_cuidapet_br/app/core/logger/app_logger.dart';
 import 'package:flutter_cuidapet_br/app/core/rest_client/rest_client.dart';
 import 'package:flutter_cuidapet_br/app/core/rest_client/rest_client_exception.dart';
+import 'package:flutter_cuidapet_br/app/models/confirm_login_model.dart';
+import 'package:flutter_cuidapet_br/app/models/user_model.dart';
 
 import './user_repository.dart';
 
@@ -56,6 +61,37 @@ class UserRepositoryImpl implements UserRepository {
       _log.error('Erro ao realizar login', e, s);
       throw Failure(
           message: 'Erro ao realizar login, tente novamente mais tarde');
+    }
+  }
+
+  @override
+  Future<ConfirmLoginModel> confrmLogin() async {
+    try {
+      final deviceToken = await FirebaseMessaging.instance.getToken();
+      final result = await _restClient.auth().patch(
+        '/auth/confirm',
+        data: {
+          'ios_token': Platform.isIOS ? deviceToken : null,
+          'android_token': Platform.isAndroid ? deviceToken : null
+        },
+      );
+
+      return ConfirmLoginModel.fromMap(result.data);
+    } on RestClientException catch (e, s) {
+      const erroMessage = 'Erro ao confirmar login';
+      _log.error(erroMessage, e, s);
+      throw Failure(message: erroMessage);
+    }
+  }
+
+  @override
+  Future<UserModel> getUserLogged() async {
+    try {
+      final result = await _restClient.get('/user/');
+      return UserModel.fromMap(result.data);
+    } on RestClientException {
+      _log.error('Erro ao buscar dados do usuário logado');
+      throw Failure(message: 'Erro ao buscar dados do usuário logado');
     }
   }
 }
