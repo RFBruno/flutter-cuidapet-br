@@ -2,6 +2,8 @@ import 'package:flutter_cuidapet_br/app/modules/auth/home/auth_home_page.dart';
 import 'package:flutter_cuidapet_br/app/modules/auth/login/login_module.dart';
 import 'package:flutter_cuidapet_br/app/modules/auth/register/register_module.dart';
 import 'package:flutter_cuidapet_br/app/modules/core/auth/auth_store.dart';
+import 'package:flutter_cuidapet_br/app/repositories/social/social_repository.dart';
+import 'package:flutter_cuidapet_br/app/repositories/social/social_repository_impl.dart';
 import 'package:flutter_cuidapet_br/app/repositories/user/user_repository.dart';
 import 'package:flutter_cuidapet_br/app/repositories/user/user_repository_impl.dart';
 import 'package:flutter_cuidapet_br/app/services/user/user_service.dart';
@@ -14,6 +16,7 @@ class AuthModule extends Module {
     //Modular tem inteligencia para pegar as instancias necessarias das classes
     // que estão declaradas no CoreModule
     super.binds(i);
+    i.addLazySingleton<SocialRepository>(SocialRepositoryImpl.new);
     i.addLazySingleton<UserRepository>(UserRepositoryImpl.new);
     i.addLazySingleton<UserService>(UserServiceImpl.new);
   }

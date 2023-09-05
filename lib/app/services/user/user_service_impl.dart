@@ -7,6 +7,9 @@ import 'package:flutter_cuidapet_br/app/core/exceptions/user_not_exists_exceptio
 import 'package:flutter_cuidapet_br/app/core/helpers/constants.dart';
 import 'package:flutter_cuidapet_br/app/core/local_storage/local_storage.dart';
 import 'package:flutter_cuidapet_br/app/core/logger/app_logger.dart';
+import 'package:flutter_cuidapet_br/app/models/social_login_type.dart';
+import 'package:flutter_cuidapet_br/app/models/social_network_model.dart';
+import 'package:flutter_cuidapet_br/app/repositories/social/social_repository.dart';
 import 'package:flutter_cuidapet_br/app/repositories/user/user_repository.dart';
 
 import './user_service.dart';
@@ -16,16 +19,19 @@ class UserServiceImpl implements UserService {
   final AppLogger _log;
   final LocalStorage _localStorage;
   final LocalSecureStorage _localSecureStorage;
+  final SocialRepository _socialRepository;
 
   UserServiceImpl(
       {required UserRepository userRepository,
       required AppLogger log,
       required LocalStorage localStorage,
-      required LocalSecureStorage localSecureStorage})
+      required LocalSecureStorage localSecureStorage,
+      required SocialRepository socialRepository})
       : _userRepository = userRepository,
         _log = log,
         _localStorage = localStorage,
-        _localSecureStorage = localSecureStorage;
+        _localSecureStorage = localSecureStorage,
+        _socialRepository = socialRepository;
 
   @override
   Future<void> register(String email, String password) async {
@@ -102,5 +108,26 @@ class UserServiceImpl implements UserService {
     final userModel = await _userRepository.getUserLogged();
     await _localStorage.write(
         Constants.LOCAL_STORAGE_USER_LOGGED_DATA_TOKEN_KEY, userModel.toJson());
+  }
+
+  @override
+  Future<void> socialLogin(SocialLoginType socialLoginType) async {
+    final SocialNetworkModel socialModel;
+    final AuthCredential authCredential;
+    final firebaseAuth = FirebaseAuth.instance;
+    switch (socialLoginType) {
+      case SocialLoginType.facebook:
+        throw Failure(message: 'Formato de login indisponivel');
+      case SocialLoginType.google:
+        socialModel = await _socialRepository.googleLogin();
+        authCredential = GoogleAuthProvider.credential(
+          accessToken: socialModel.accessToken,
+          idToken: socialModel.id,
+        );
+        break;
+    }
+
+    final loginMethods =
+        await firebaseAuth.fetchSignInMethodsForEmail(socialModel.email);
   }
 }
