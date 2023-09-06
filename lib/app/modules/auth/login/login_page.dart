@@ -5,6 +5,7 @@ import 'package:flutter_cuidapet_br/app/core/ui/icons/cuidapet_icons.dart';
 import 'package:flutter_cuidapet_br/app/core/ui/widgets/cuidapet_button_with_icon.dart';
 import 'package:flutter_cuidapet_br/app/core/ui/widgets/cuidapet_default_button.dart';
 import 'package:flutter_cuidapet_br/app/core/ui/widgets/cuidapet_text_form_field.dart';
+import 'package:flutter_cuidapet_br/app/models/social_login_type.dart';
 import 'package:flutter_cuidapet_br/app/modules/auth/login/login_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:validatorless/validatorless.dart';
@@ -42,7 +43,7 @@ class LoginPage extends StatelessWidget {
                 SizedBox(height: 15.h),
                 const _OrDivider(),
                 SizedBox(height: 15.h),
-                const _LoginRegisterButtons(),
+                _LoginRegisterButtons(),
               ],
             )),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter_cuidapet_br/app/models/confirm_login_model.dart';
+import 'package:flutter_cuidapet_br/app/models/social_network_model.dart';
 import 'package:flutter_cuidapet_br/app/models/user_model.dart';
 
 abstract interface class UserRepository {
@@ -6,4 +7,5 @@ abstract interface class UserRepository {
   Future<String> login(String email, String password);
   Future<ConfirmLoginModel> confrmLogin();
   Future<UserModel> getUserLogged();
+  Future<String> loginSocial(SocialNetworkModel model);
 }
