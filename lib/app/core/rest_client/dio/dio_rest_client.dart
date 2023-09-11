@@ -4,6 +4,7 @@ import 'package:flutter_cuidapet_br/app/core/helpers/environment.dart';
 import 'package:flutter_cuidapet_br/app/core/local_storage/local_storage.dart';
 import 'package:flutter_cuidapet_br/app/core/logger/app_logger.dart';
 import 'package:flutter_cuidapet_br/app/core/rest_client/dio/interceptor/auth_interceptor.dart';
+import 'package:flutter_cuidapet_br/app/core/rest_client/dio/interceptor/auth_refresh_token_interceptor.dart';
 import 'package:flutter_cuidapet_br/app/core/rest_client/rest_client.dart';
 import 'package:flutter_cuidapet_br/app/core/rest_client/rest_client_exception.dart';
 import 'package:flutter_cuidapet_br/app/core/rest_client/rest_client_response.dart';
@@ -25,6 +26,7 @@ class DioRestClient extends RestClient {
 
   DioRestClient(
       {required LocalStorage localStorage,
+      required LocalSecureStorage localSecureStorage,
       required AuthStore authStore,
       required AppLogger log,
       BaseOptions? baseOptions}) {
@@ -33,6 +35,12 @@ class DioRestClient extends RestClient {
       AuthInterceptor(
         localStorage: localStorage,
         authStore: authStore,
+      ),
+      AuthRefreshTokenInterceptor(
+        authStore: authStore,
+        localStorage: localStorage,
+        localSecureStorage: localSecureStorage,
+        restClient: this,
         log: log,
       ),
       LogInterceptor(requestBody: true, responseBody: true),

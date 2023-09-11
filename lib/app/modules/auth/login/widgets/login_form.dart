@@ -8,10 +8,10 @@ class _LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<_LoginForm> {
-  final controller = Modular.get<LoginController>();
   final _formKey = GlobalKey<FormState>();
   final _loginEC = TextEditingController();
   final _passwordEC = TextEditingController();
+  final controller = Modular.get<LoginController>();
 
   @override
   void initState() {

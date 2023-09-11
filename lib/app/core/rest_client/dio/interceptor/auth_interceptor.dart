@@ -3,20 +3,17 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_cuidapet_br/app/core/helpers/constants.dart';
 import 'package:flutter_cuidapet_br/app/core/local_storage/local_storage.dart';
-import 'package:flutter_cuidapet_br/app/core/logger/app_logger.dart';
 import 'package:flutter_cuidapet_br/app/modules/core/auth/auth_store.dart';
 
 class AuthInterceptor extends Interceptor {
   final LocalStorage _localStorage;
   final AuthStore _authStore;
-  final AppLogger _log;
+
   AuthInterceptor({
     required LocalStorage localStorage,
     required AuthStore authStore,
-    required AppLogger log,
   })  : _localStorage = localStorage,
-        _authStore = authStore,
-        _log = log;
+        _authStore = authStore;
 
   @override
   Future<void> onRequest(
@@ -43,10 +40,4 @@ class AuthInterceptor extends Interceptor {
 
     handler.next(options);
   }
-
-  // @override
-  // void onResponse(Response response, ResponseInterceptorHandler handler) {}
-
-  // @override
-  // void onError(DioException err, ErrorInterceptorHandler handler) {}
 }
