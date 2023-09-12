@@ -1,3 +1,4 @@
+import 'package:flutter_cuidapet_br/app/modules/address/address_module.dart';
 import 'package:flutter_cuidapet_br/app/modules/auth/auth_module.dart';
 import 'package:flutter_cuidapet_br/app/modules/core/core_module.dart';
 import 'package:flutter_cuidapet_br/app/modules/home/home_module.dart';
@@ -9,12 +10,13 @@ class AppModule extends Module {
 
   @override
   List<Module> get imports => [
-    CoreModule(),
-  ];
+        CoreModule(),
+      ];
 
   @override
   void routes(r) {
     r.module('/auth', module: AuthModule());
     r.module('/home', module: HomeModule());
+    r.module('/address', module: AddressModule());
   }
 }
