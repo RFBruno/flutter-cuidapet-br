@@ -1,13 +1,32 @@
-part of '../address_page.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+part of '../../address_page.dart';
+
+typedef AddressSelectedCallback = void Function(PlaceModel);
 
 class _AddressSearchWidget extends StatefulWidget {
-  const _AddressSearchWidget();
+  final AddressSelectedCallback addressSelectedCallback;
+
+  const _AddressSearchWidget({
+    required this.addressSelectedCallback,
+  });
 
   @override
   State<_AddressSearchWidget> createState() => _AddressSearchWidgetState();
 }
 
 class _AddressSearchWidgetState extends State<_AddressSearchWidget> {
+  final searchTextEC = TextEditingController();
+  final searchTextFN = FocusNode();
+
+  final controller = Modular.get<AddressSearchController>();
+
+  @override
+  void dispose() {
+    super.dispose();
+    searchTextEC.dispose();
+    searchTextFN.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final border = OutlineInputBorder(
@@ -22,6 +41,8 @@ class _AddressSearchWidgetState extends State<_AddressSearchWidget> {
       borderRadius: BorderRadius.circular(20),
       child: TypeAheadFormField<PlaceModel>(
         textFieldConfiguration: TextFieldConfiguration(
+          controller: searchTextEC,
+          focusNode: searchTextFN,
           cursorColor: context.primaryColorDark,
           decoration: InputDecoration(
             prefixIcon: Icon(
@@ -48,12 +69,17 @@ class _AddressSearchWidgetState extends State<_AddressSearchWidget> {
     );
   }
 
-  FutureOr<Iterable<PlaceModel>> _suggestionsCallback(String pattern) {
-    log('Endereço digitado $pattern');
-    return [PlaceModel(address: 'Av paulista, 200', lat: 100, lng: 200)];
+  Future<List<PlaceModel>> _suggestionsCallback(String pattern) async {
+    if (pattern.isNotEmpty) {
+      return controller.searchAddress(pattern);
+    }
+    return <PlaceModel>[];
   }
 
-  void _onSuggestionSelected(suggestion) {}
+  void _onSuggestionSelected(suggestion) {
+    searchTextEC.text = suggestion.address;
+    widget.addressSelectedCallback(suggestion);
+  }
 }
 
 class _ItemTile extends StatelessWidget {

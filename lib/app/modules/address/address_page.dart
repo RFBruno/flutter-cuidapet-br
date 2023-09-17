@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cuidapet_br/app/core/ui/extensions/size_screen_extension.dart';
 import 'package:flutter_cuidapet_br/app/core/ui/extensions/theme_extension.dart';
 import 'package:flutter_cuidapet_br/app/models/place_model.dart';
-import 'package:flutter_cuidapet_br/app/services/address/address_service.dart';
+import 'package:flutter_cuidapet_br/app/modules/address/widgets/address_search_widget/address_search_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 part './widgets/address_item.dart';
-part './widgets/address_search_widget.dart';
+part 'widgets/address_search_widget/address_search_widget.dart';
 
 class AddressPage extends StatefulWidget {
   const AddressPage({super.key});
@@ -20,7 +20,6 @@ class AddressPage extends StatefulWidget {
 }
 
 class _AddressPageState extends State<AddressPage> {
-  final controller = Modular.get<AddressService>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,19 +33,17 @@ class _AddressPageState extends State<AddressPage> {
           padding: const EdgeInsets.all(13),
           child: Column(
             children: [
-              TextButton(
-                onPressed: () {
-                  controller.findAddressByGooglePlaces('rua manuel');
-                },
-                child: const Text('teste'),
-              ),
               Text(
                 'Adicione ou escolha um endereço',
                 style: context.textTheme.headlineMedium
                     ?.copyWith(color: Colors.black),
               ),
               const SizedBox(height: 20),
-              const _AddressSearchWidget(),
+              _AddressSearchWidget(
+                addressSelectedCallback: (place) {
+                  log('$place');
+                },
+              ),
               const SizedBox(height: 30),
               ListTile(
                 leading: const CircleAvatar(
