@@ -1,12 +1,26 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_cuidapet_br/app/core/ui/extensions/size_screen_extension.dart';
 import 'package:flutter_cuidapet_br/app/core/ui/extensions/theme_extension.dart';
+import 'package:flutter_cuidapet_br/app/models/place_model.dart';
+import 'package:flutter_cuidapet_br/app/services/address/address_service.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 part './widgets/address_item.dart';
+part './widgets/address_search_widget.dart';
 
-class AddressPage extends StatelessWidget {
+class AddressPage extends StatefulWidget {
   const AddressPage({super.key});
 
+  @override
+  State<AddressPage> createState() => _AddressPageState();
+}
+
+class _AddressPageState extends State<AddressPage> {
+  final controller = Modular.get<AddressService>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,22 +34,20 @@ class AddressPage extends StatelessWidget {
           padding: const EdgeInsets.all(13),
           child: Column(
             children: [
+              TextButton(
+                onPressed: () {
+                  controller.findAddressByGooglePlaces('rua manuel');
+                },
+                child: const Text('teste'),
+              ),
               Text(
                 'Adicione ou escolha um endereço',
                 style: context.textTheme.headlineMedium
                     ?.copyWith(color: Colors.black),
               ),
               const SizedBox(height: 20),
-              Material(
-                elevation: 10,
-                borderRadius: BorderRadius.circular(20),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20))),
-                ),
-              ),
-              const SizedBox(height: 20),
+              const _AddressSearchWidget(),
+              const SizedBox(height: 30),
               ListTile(
                 leading: const CircleAvatar(
                   backgroundColor: Colors.red,

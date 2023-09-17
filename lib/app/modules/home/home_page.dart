@@ -33,8 +33,6 @@ class _HomePageState extends PageLifyCycleState<HomeController, HomePage> {
             onPressed: () async {
               final categories =
                   await Modular.get<RestClient>().auth().get('/categories/');
-
-              print(categories.data);
             },
             child: const Text(
               'Test refresh token',
