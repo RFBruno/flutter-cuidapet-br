@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_cuidapet_br/app/core/database/sqlite_connection_factory.dart';
 import 'package:flutter_cuidapet_br/app/core/ui/extensions/size_screen_extension.dart';
 import 'package:flutter_cuidapet_br/app/core/ui/extensions/theme_extension.dart';
 import 'package:flutter_cuidapet_br/app/models/place_model.dart';
@@ -23,7 +22,6 @@ class AddressPage extends StatefulWidget {
 class _AddressPageState extends State<AddressPage> {
   @override
   Widget build(BuildContext context) {
-    Modular.get<SqliteConnectionFactory>().openConnection();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
