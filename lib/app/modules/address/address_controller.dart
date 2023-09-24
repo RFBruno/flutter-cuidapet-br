@@ -96,6 +96,13 @@ abstract class AddressControllerBase with Store, ControllerLifyCycle {
 
     if (address is PlaceModel) {
       _placeModel = address;
+    } else if (address is AddressEntity) {
+      selectAddress(address);
     }
+  }
+
+  Future<void> selectAddress(AddressEntity addressEntity) async {
+    await _addressService.selectAddress(addressEntity);
+    Modular.to.pop();
   }
 }
