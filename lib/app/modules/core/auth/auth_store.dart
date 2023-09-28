@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_cuidapet_br/app/core/helpers/constants.dart';
 import 'package:flutter_cuidapet_br/app/core/local_storage/local_storage.dart';
 import 'package:flutter_cuidapet_br/app/models/user_model.dart';
+import 'package:flutter_cuidapet_br/app/services/address/address_service.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
@@ -11,8 +12,13 @@ class AuthStore = AuthStoreBase with _$AuthStore;
 
 abstract class AuthStoreBase with Store {
   final LocalStorage _localStorage;
+  final LocalSecureStorage _localSecureStorage;
+  final AddressService _addressService;
 
-  AuthStoreBase() : _localStorage = Modular.get<LocalStorage>();
+  AuthStoreBase()
+      : _localStorage = Modular.get<LocalStorage>(),
+        _localSecureStorage = Modular.get<LocalSecureStorage>(),
+        _addressService = Modular.get<AddressService>();
 
   @readonly
   UserModel? _userLogged;
@@ -37,6 +43,8 @@ abstract class AuthStoreBase with Store {
   @action
   Future<void> logout() async {
     await _localStorage.clear();
+    await _localSecureStorage.clear();
+    await _addressService.deleteAll();
     _userLogged = UserModel.empty();
   }
 }

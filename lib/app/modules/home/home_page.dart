@@ -5,6 +5,7 @@ import 'package:flutter_cuidapet_br/app/core/rest_client/rest_client.dart';
 import 'package:flutter_cuidapet_br/app/entities/address_entity.dart';
 import 'package:flutter_cuidapet_br/app/modules/home/home_controller.dart';
 import 'package:flutter_cuidapet_br/app/services/address/address_service.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class HomePage extends StatefulWidget {
@@ -44,7 +45,7 @@ class _HomePageState extends PageLifyCycleState<HomeController, HomePage> {
           ),
           TextButton(
             onPressed: () async {
-              await Modular.to.pushNamed('/address/');
+              controller.goToAddressPage();
             },
             child: const Text(
               'Ir para endereço',
@@ -62,8 +63,16 @@ class _HomePageState extends PageLifyCycleState<HomeController, HomePage> {
               'Buscar endereço',
             ),
           ),
-          Text(addressEntity?.address ?? 'N?A'),
-          Text(addressEntity?.additional ?? 'N?A')
+          Observer(
+            builder: (_) {
+              return Text(controller.addressEntity?.address ?? 'N?A');
+            },
+          ),
+          Observer(
+            builder: (_) {
+              return Text(controller.addressEntity?.additional ?? 'N?A');
+            },
+          )
         ],
       ),
     );

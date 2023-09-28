@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter_cuidapet_br/app/core/lify_cycle/controller_lify_cycle.dart';
 import 'package:flutter_cuidapet_br/app/core/ui/widgets/cuidapet_loader.dart';
+import 'package:flutter_cuidapet_br/app/core/ui/widgets/cuidapet_messages.dart';
 import 'package:flutter_cuidapet_br/app/entities/address_entity.dart';
 import 'package:flutter_cuidapet_br/app/models/place_model.dart';
 import 'package:flutter_cuidapet_br/app/services/address/address_service.dart';
@@ -103,6 +104,16 @@ abstract class AddressControllerBase with Store, ControllerLifyCycle {
 
   Future<void> selectAddress(AddressEntity addressEntity) async {
     await _addressService.selectAddress(addressEntity);
-    Modular.to.pop();
+    Modular.to.pop(addressEntity);
+  }
+
+  Future<bool> addressWasSelected() async {
+    final address = await _addressService.getAddressSelected();
+    if (address != null) {
+      return true;
+    } else {
+      CuidapetMessages.alert('Por favor selecione ou cadastre um endereço');
+      return false;
+    }
   }
 }
