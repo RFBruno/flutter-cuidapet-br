@@ -45,6 +45,25 @@ mixin _$HomeController on HomeControllerBase, Store {
     });
   }
 
+  late final _$_supplierPageTypeSelectedAtom = Atom(
+      name: 'HomeControllerBase._supplierPageTypeSelected', context: context);
+
+  SupplierPageType get supplierPageTypeSelected {
+    _$_supplierPageTypeSelectedAtom.reportRead();
+    return super._supplierPageTypeSelected;
+  }
+
+  @override
+  SupplierPageType get _supplierPageTypeSelected => supplierPageTypeSelected;
+
+  @override
+  set _supplierPageTypeSelected(SupplierPageType value) {
+    _$_supplierPageTypeSelectedAtom
+        .reportWrite(value, super._supplierPageTypeSelected, () {
+      super._supplierPageTypeSelected = value;
+    });
+  }
+
   late final _$_getAddressSelectedAsyncAction =
       AsyncAction('HomeControllerBase._getAddressSelected', context: context);
 
@@ -52,6 +71,31 @@ mixin _$HomeController on HomeControllerBase, Store {
   Future<void> _getAddressSelected() {
     return _$_getAddressSelectedAsyncAction
         .run(() => super._getAddressSelected());
+  }
+
+  late final _$goToAddressPageAsyncAction =
+      AsyncAction('HomeControllerBase.goToAddressPage', context: context);
+
+  @override
+  Future<void> goToAddressPage() {
+    return _$goToAddressPageAsyncAction.run(() => super.goToAddressPage());
+  }
+
+  late final _$_getCategoriesAsyncAction =
+      AsyncAction('HomeControllerBase._getCategories', context: context);
+
+  @override
+  Future<void> _getCategories() {
+    return _$_getCategoriesAsyncAction.run(() => super._getCategories());
+  }
+
+  late final _$changeTabSupplierAsyncAction =
+      AsyncAction('HomeControllerBase.changeTabSupplier', context: context);
+
+  @override
+  Future<void> changeTabSupplier(SupplierPageType supplierPageType) {
+    return _$changeTabSupplierAsyncAction
+        .run(() => super.changeTabSupplier(supplierPageType));
   }
 
   @override

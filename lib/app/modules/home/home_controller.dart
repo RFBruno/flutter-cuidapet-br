@@ -10,6 +10,8 @@ import 'package:mobx/mobx.dart';
 
 part 'home_controller.g.dart';
 
+enum SupplierPageType { list, grid }
+
 class HomeController = HomeControllerBase with _$HomeController;
 
 abstract class HomeControllerBase with Store, ControllerLifyCycle {
@@ -21,6 +23,9 @@ abstract class HomeControllerBase with Store, ControllerLifyCycle {
 
   @readonly
   var _listCategories = <SupplierCategoryModel>[];
+
+  @readonly
+  var _supplierPageTypeSelected = SupplierPageType.list;
 
   HomeControllerBase()
       : _addressService = Modular.get<AddressService>(),
@@ -46,6 +51,7 @@ abstract class HomeControllerBase with Store, ControllerLifyCycle {
     }
   }
 
+  @action
   Future<void> goToAddressPage() async {
     final address = await Modular.to.pushNamed<AddressEntity>('/address/');
     if (address != null) {
@@ -53,6 +59,7 @@ abstract class HomeControllerBase with Store, ControllerLifyCycle {
     }
   }
 
+  @action
   Future<void> _getCategories() async {
     try {
       final categories = await _supplierService.getCategories();
@@ -61,5 +68,10 @@ abstract class HomeControllerBase with Store, ControllerLifyCycle {
       CuidapetMessages.alert('Erro ao buscar categorias');
       throw Exception();
     }
+  }
+
+  @action
+  Future<void> changeTabSupplier(SupplierPageType supplierPageType) async {
+    _supplierPageTypeSelected = supplierPageType;
   }
 }
