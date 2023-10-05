@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cuidapet_br/app/core/lify_cycle/page_lify_cycle_state.dart';
+import 'package:flutter_cuidapet_br/app/core/ui/extensions/size_screen_extension.dart';
 import 'package:flutter_cuidapet_br/app/core/ui/extensions/theme_extension.dart';
 import 'package:flutter_cuidapet_br/app/entities/address_entity.dart';
 import 'package:flutter_cuidapet_br/app/models/supplier_category_model.dart';
