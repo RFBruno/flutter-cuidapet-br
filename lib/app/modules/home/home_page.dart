@@ -4,6 +4,7 @@ import 'package:flutter_cuidapet_br/app/core/ui/extensions/size_screen_extension
 import 'package:flutter_cuidapet_br/app/core/ui/extensions/theme_extension.dart';
 import 'package:flutter_cuidapet_br/app/entities/address_entity.dart';
 import 'package:flutter_cuidapet_br/app/models/supplier_category_model.dart';
+import 'package:flutter_cuidapet_br/app/models/supplier_nearby_me_model.dart';
 import 'package:flutter_cuidapet_br/app/modules/home/home_controller.dart';
 import 'package:flutter_cuidapet_br/app/modules/home/widgets/home_appbar.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
